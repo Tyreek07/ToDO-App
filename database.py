@@ -28,7 +28,8 @@ class Database:
         print("Task added")
 
     def close_task(self, task_id):
-        query = "UPDATE task SET is_completed = 1 WHERE id = ?"
+        print(type(task_id))
+        query = "UPDATE tasks SET is_completed = 1 WHERE id = ?"
         self.con.execute(query, (task_id,))
         self.con.commit()
         print(f"Task {task_id} marked as completed.")
@@ -42,17 +43,22 @@ class Database:
     def get_all_tasks(self):
         query = "SELECT * FROM tasks"
         result = self.con.execute(query)
-        return result.fetchall()
+        for entry in result:
+            print(entry)
     
     def get_all_open_tasks(self):
         query = "SELECT * FROM tasks WHERE is_completed = 0"
         result = self.con.execute(query)
-        return result.fetchall()
+
+        for entry in result:
+            print(entry)
+
 
     def get_all_closed_tasks(self):
         query = "SELECT * FROM tasks WHERE is_completed = 1"
         result = self.con.execute(query)
-        return result.fetchall()
+        for entry in result:
+            print(entry)
 
     def search_task(self, searchtext):
         query = "SELECT * FROM tasks WHERE title LIKE ?"
